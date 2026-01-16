@@ -1,0 +1,24 @@
+# Database
+local_db
+
+# Local server configuration
+local
+
+# Eliom
+.depend
+_client
+_deps
+_server
+
+# Mobile application
+cordova
+
+# Style
+.sass-cache
+
+static/css/h42n42.css.map
+static/css/h42n42.css
+
+# Dune
+_build
+
