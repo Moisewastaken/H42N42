@@ -12,6 +12,9 @@
         pkgs = import nixpkgs { inherit system; };
       in
       {
+		defaultPackage = null;
+		defaultApp = null;
+		
         devShells.default = pkgs.mkShell {
           buildInputs = [
             pkgs.ocaml

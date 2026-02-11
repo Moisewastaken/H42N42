@@ -23,21 +23,18 @@ SERVER_PACKAGES       :=
 ##----------------------------------------------------------------------
 ## The following part contains the configuration for the ocsigenserver.
 
-# User to run server with (make run.*)
-WWWUSER               := www-data
-WWWGROUP              := www-data
-
-# Port for running the server (make run.*)
-PORT                  := 80
+# Port for running the server (make run)
+PORT                  := 8080
 
 # Port for testing (make test.*)
 TEST_PORT             := 8080
 
 # Root of installation (must end with /)
-PREFIX                := /usr/local/
+# PREFIX                := /usr/local/
+PREFIX                := ${OPAM_SWITCH_PREFIX}/
 
 # Local folder for make test.* (must end with /)
-TEST_PREFIX           := /tmp/ocsigen/local/
+TEST_PREFIX           := local/
 
 ## The installation tree (relative to $(PREFIX) when installing/running or
 ## $(TEST_PREFIX) when testing).
@@ -77,3 +74,4 @@ CSS_PREFIX            := $(LOCAL_STATIC_CSS)/${PROJECT_NAME}
 DEBUG                 := yes
 
 ##----------------------------------------------------------------------
+

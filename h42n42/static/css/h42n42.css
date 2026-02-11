@@ -1,0 +1,76 @@
+* {
+    font-family: sans-serif;
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#game_over_container {
+	position: absolute;
+	display: none;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	top : 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+}
+
+#play_game_container {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	top : 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+}
+
+#game_container {
+	position: relative;
+	margin: 0 auto;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	background-image: url('/css/assets/background_gif.gif');
+	background-repeat: no-repeat;
+	image-rendering: pixelated;
+	background-size: 100% 100%;
+	background-position: center;
+	overflow: hidden;
+}
+
+#hospital {
+  position: absolute;
+  bottom: 0;
+  left: 23%;
+  width: 60%;
+  height: 15%;
+  background: lightslategray;
+  opacity: 0%;
+}
+
+#river {
+	background-color: lightblue;
+	width: 100%;
+	height: 10%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	opacity: 0%;
+}
+
+.creet {
+	border-radius: 50%;
+	width: 32px;
+	height: 32px;
+	position: absolute;
+	image-rendering: pixelated;
+}
