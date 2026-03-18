@@ -1,0 +1,6 @@
+services:
+    h42n42:
+        build: .
+        user: "${UID}:${GID}"
+        ports:
+            - "8080:8080"

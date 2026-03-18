@@ -28,12 +28,12 @@ App.register ~service:main_service (fun () () ->
 	(body 
 		[
       div ~a:[a_id "play_game_container"] [
-        h1 [txt "H42N42"];
-        button ~a:[a_id "play_button"] [txt "Play"];        
+        img ~alt:("H42N42") ~src:(make_uri ~service:(Eliom_service.static_dir ()) ["css"; "assets"; "H42N42_title.png"]) ();
+        button ~a:[a_id "play_button"] [txt ""];   
       ];
       div ~a:[a_id "game_over_container"] [
-        h1 [txt "You lost !"];
-        button ~a:[a_id "play_again_button"] [txt "Play Again"];        
+        img ~alt:("H42N42") ~src:(make_uri ~service:(Eliom_service.static_dir ()) ["css"; "assets"; "Game_Over_Title.png"]) ();
+        button ~a:[a_id "play_again_button"] [txt ""];        
       ];
 			div ~a:[a_id "game_container"] [
         div ~a:[a_id "river"] [];
@@ -54,36 +54,37 @@ let () = Random.self_init ()
 
 
 let rec controller creets global_speed count =
-  let%lwt () = Lwt_js.sleep 0.01 in
-  List.iter (fun c -> 
-    Lwt.async (fun () -> (
-      c#move global_speed !creets;
-      Lwt.return ()
-    ))
-  ) !creets;
-  if not (List.exists (fun c -> c#get_state = Healthy) !creets) then begin
-    List.iter (fun c -> c#remove ()) !creets;
-    let game_over = Dom_html.getElementById "game_over_container" in
-    game_over##.style##.display := Js.string "flex";
-    Lwt.return ()
-  end
-  else begin
-    let new_global_speed = if global_speed < Config.max_global_speed then global_speed +. 0.001 else global_speed in
+	let%lwt () = Lwt_js.sleep 0.01 in
+	creets := List.filter (fun c -> c#get_state <> Dead) !creets;
+	List.iter (fun c -> 
+		Lwt.async (fun () -> (
+		c#move global_speed !creets;
+		Lwt.return ()
+		))
+	) !creets;
+	if not (List.exists (fun c -> c#get_state = Healthy) !creets) then begin
+		List.iter (fun c -> c#remove ()) !creets;
+		let game_over = Dom_html.getElementById "game_over_container" in
+		game_over##.style##.display := Js.string "flex";
+		Lwt.return ()
+	end
+	else begin
+		let new_global_speed = if global_speed < Config.max_global_speed then global_speed +. 0.001 else global_speed in
 
-    count := !count + 1;
-    
-    if !count = Config.creet_reproduce_count then begin
-      let healthy, _ = List.partition (fun c -> c#get_state = Healthy) !creets in
-      let new_creet = new creet in
-      new_creet#init ();
-      let random_creet = List.nth healthy (Random.int (List.length healthy)) in
-      new_creet#set_position random_creet#get_bbox.left random_creet#get_bbox.top;
-      creets := new_creet :: !creets;
-      count := 0
-    end;
+		count := !count + 1;
+		
+		if !count = Config.creet_reproduce_count then begin
+		let healthy, _ = List.partition (fun c -> c#get_state = Healthy) !creets in
+		let new_creet = new creet in
+		new_creet#init ();
+		let random_creet = List.nth healthy (Random.int (List.length healthy)) in
+		new_creet#set_position random_creet#get_bbox.left random_creet#get_bbox.top;
+		creets := new_creet :: !creets;
+		count := 0
+		end;
 
-    controller creets new_global_speed count
-  end
+		controller creets new_global_speed count
+	end
   
 let launch = Dom_html.handler (fun _ ->
   let play_game = Dom_html.getElementById "play_game_container" in
