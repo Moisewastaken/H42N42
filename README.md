@@ -22,6 +22,9 @@ To run this project you will need `docker` and `docker-compose` installed.
 
 After cloning the repostory, you can use the `make` command to build and run the project. You can use `make stop` to stop then server and `make clean` and `make fclean` to remove the container. Or just use the basic docker-compose commands (`docker-compose up --build`).
 
+### Development
+You can also go in the nix-config folder run `nix develop -c $SHELL` to enter nix environment and go into the h42n42 folder at the root to run the project in dev mode with the `makae test.byte` command.
+
 ## Technical aspect
 
 The subject wanted us the use the parallelism with the lwt library and create a thread for each creet's collisions and input handling. Once i set up a loop that launches every thread for each creet i then simply defined a creet class and added every function for collisions, input, movements, sprites updates, etc.
